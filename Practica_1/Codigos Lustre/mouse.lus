@@ -1,0 +1,28 @@
+node COUNTER (Click, Clock : bool) returns (Val : int ; Enable : bool);
+var
+    contador_clocks : int;
+    prev_val : int;
+    prev_enable: bool;
+let
+    prev_val = 0 -> pre(Val);
+    contador_clocks = (if Clock then 1 else 0) -> if Clock then pre(contador_clocks) + 1 else pre(contador_clocks);  
+    Enable = if contador_clocks mod 3 = 0 and contador_clocks <> 0 then true else false;
+    prev_enable = false -> pre(Enable);
+    Val = if Click and prev_enable and Enable then 0 else if Click and prev_enable and not Enable then 1 else if not Click and prev_enable then 0 else if Click and not prev_enable then prev_val + 1 else prev_val;
+tel
+
+node EMISSION (Val : int ; Enable : bool) returns (Single, Double : bool);
+let
+    Single = if not Enable then false else if Val = 1 then true else false;
+    Double = if not Enable then false else if Val > 1 then true else false;
+tel
+
+node MOUSE (Click, Clock : bool) returns (Single, Double : bool);
+var
+    Val : int;
+    Enable : bool;
+let
+    (Val, Enable) = COUNTER(Click, Clock);
+    (Single, Double) = EMISSION(Val, Enable);
+    
+tel

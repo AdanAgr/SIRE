@@ -1,0 +1,32 @@
+Pregunta: ¿Qué sucede si el bucle del Productor es de 2 en vez de 3 en la Etapa 1?
+
+El Consumidor intentará extraer tres elementos, pero solo se habrán insertado dos. Esto provocará que la tarea Consumidor quede bloqueada esperando un tercer dato que nunca llegará, ya que el Productor finaliza tras dos inserciones.
+
+---
+
+Pregunta: ¿Qué sucede si el bucle del Productor es de 2 en la Etapa 2 (select) o si el delay aumenta a 2.0?
+
+Si el bucle es de 2, el Consumidor volverá a quedarse bloqueado esperando el tercer elemento. Si el delay se incrementa a 2.0, el orden y la sincronización entre Productor y Consumidor cambia, lo que puede dar lugar a más retardos y afectar al rendimiento del sistema.
+
+---
+
+Pregunta: ¿Qué sucede si el bucle del Productor es de 2 en la Etapa 4 con temporización?
+
+El Consumidor seguirá esperando un tercer valor, pero gracias a la temporización, la tarea Buffer puede realizar otras acciones (como imprimir mensajes de espera). Aun así, la tarea no finaliza automáticamente, y se mantiene activa.
+
+---
+
+Pregunta: ¿Termina en algún momento el programa si hay menos inserciones que extracciones?
+
+No, a menos que se implemente un mecanismo de terminación explícita. La tarea Buffer permanece esperando indefinidamente a que se cumplan las condiciones de sus entradas.
+
+
+---
+
+Pregunta: ¿Qué sucede si se añade una cláusula delay en la Etapa 5 además de terminate?
+
+La cláusula delay imprime mensajes de espera si no hay actividad, pero la tarea Buffer podrá finalizar correctamente gracias a la cláusula terminate, que permite la finalización ordenada una vez completadas las tareas dependientes.
+
+
+NOTA: Hemos cambiado los For dentro de los Bodys del cosumidor y Productor(Para comprobar que pasaba en cada caso)
+

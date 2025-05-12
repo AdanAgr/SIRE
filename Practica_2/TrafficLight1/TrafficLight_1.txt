@@ -1,0 +1,5 @@
+En el código del TrafficLight 1 la señal green no se activa en el instante 0
+
+A mayores de esto podemos ver que cada vez que se activa el botón se reinicia la fase y en vez de volver al estado GREEN vuelve al estado YELLOW.
+
+Esto es debido a la declaración de la variable Fase no tiene en cuenta el valor actual de la Fase. Una posible forma de empezar a solucionar el problema sería añadir a la condición de Fase que no solo dependa del BOTON si no que dependa también del valor anterior de Fase.

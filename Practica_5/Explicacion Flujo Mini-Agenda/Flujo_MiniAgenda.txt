@@ -1,0 +1,22 @@
+begin → Menu → 
+         ├── Anadir_Contacto → Limpiar_String
+         ├── Buscar_Contacto → Limpiar_String
+         └── Mostrar_Contactos
+
+begin → Menu
+El programa inicia ejecutando el procedimiento Menu.
+
+Menu muestra opciones y según la entrada del usuario, va a una de estas:
+
+Anadir_Contacto (1)
+
+Buscar_Contacto (2)
+
+Mostrar_Contactos (3)
+
+o sale del programa. (4)
+
+Dentro de:
+
+Anadir_Contacto y Buscar_Contacto (1 y 2)
+→ llaman internamente a Limpiar_String para limpiar espacios en los datos ingresados.

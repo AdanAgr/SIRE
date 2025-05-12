@@ -1,0 +1,180 @@
+type array_sensores=sensorTemp^3;
+
+type tipo_temperatura = real;
+type act = enum{ACTIVADO,NOACTIVADO};
+
+function inicializar() returns (array: array_sensores);
+let
+array = [
+sensor(1, 25.0),
+sensor(2, 30.5),
+sensor(3, 28.3)
+];
+tel;
+type sensorTemp = struct{id: int; temperatura: real};
+function sensor(i: int; temp: real) returns (out: sensorTemp);
+let
+	out.id=i;
+	out.temperatura=temp;
+tel;
+
+function temperatura_media1(array: array_sensores) returns (media: real);
+var
+suma: real;
+let
+	suma = array[0].temperatura + array[1].temperatura +
+	array[2].temperatura;
+	media = suma / 3.0;
+tel;
+
+
+function extraer_temperatura(sensor: sensorTemp) returns (temp: real);
+let
+temp = sensor.temperatura;
+tel;
+function temperatura_media2(array: array_sensores) returns (media: real);
+var
+suma: real;
+a: real^3;
+let
+	-- Extrae las temperaturas del array de sensores
+	a = map<<extraer_temperatura,3>>(array);
+	suma = red<<+,3>>(0.0, a);
+	media = suma / 3.0;
+tel;
+
+function suma_sensorTemp(acc:real;sensor: sensorTemp) returns (accT: real);
+let
+	accT = acc + sensor.temperatura;
+tel;
+
+function temperatura_media3(array: array_sensores) returns (media: real);
+var
+	suma: real;
+let
+	suma = red<<suma_sensorTemp,3>>(0.0, array);
+	media = suma / 3.0;
+tel;
+
+function filtro_temperatura28(s: sensorTemp) returns (b:bool);
+let
+	b = s.temperatura > 28.0;
+tel;
+
+
+node acumular_temp_filtrados(acumTemp: real; s: sensorTemp) returns (acc_temp: real; y:sensorTemp);
+let
+	acc_temp = if filtro_temperatura28(s) then acumTemp + s.temperatura
+	else acumTemp;
+	y=s;
+tel;
+
+
+
+node acumular_elem_filtrados(acumElem: real; s: sensorTemp) returns (acc_elem: real);
+let
+	acc_elem = if filtro_temperatura28(s) then acumElem + 1.0
+	else acumElem;
+tel;
+
+
+node filtrar_sensores(array: array_sensores) returns (media:real; a_filtrado:array_sensores);
+var
+	suma:real;
+	num:real;
+let
+	(suma, a_filtrado) = fillred<<acumular_temp_filtrados, 3>>(0.0, array);
+	num = red<<acumular_elem_filtrados, 3>>(0.0, a_filtrado);
+	media = suma / num;
+tel;
+
+node es_impar(s: sensorTemp) returns (s1:sensorTemp);
+var
+	impar:bool;
+let
+	impar = (s.id mod 2) <> 0;
+	s1 = if impar then sensor(s.id,s.temperatura + 2.0) else s;
+tel;
+
+node modificar_sensores_impares(array: array_sensores) returns (a_modif:array_sensores);
+let
+	a_modif = map<<es_impar, 3>>(array);
+tel;
+
+node generar_relojes(c: int) returns (clk_rapido: bool; clk_lento: bool);
+let
+	clk_rapido = false->(c mod 2 = 0);
+	clk_lento = false->(c mod 4 = 0);
+tel;
+
+node filtrar_temperatura(clk_rapido: bool; temp: tipo_temperatura) returns (temp_filtrada:real when clk_rapido);
+let
+	temp_filtrada = temp when clk_rapido;
+tel;
+
+node activar_alarma(clk_rapido:bool; clk_lento: bool; temp: tipo_temperatura when clk_rapido) returns (alarma: act; temp_sincronizada:tipo_temperatura when clk_lento;clock:bool);
+var
+	clock_lento, clock_rapido, cond:bool;
+let
+	temp_sincronizada = current(temp) when clk_lento;
+	clock_lento = merge clk_lento (true->temp_sincronizada>28.0)(false->false);
+	clock_rapido = merge clk_rapido (true->true)(false->false);
+	cond = clock_rapido and clock_lento;
+	clock = merge cond (true->true)(false->false);
+	
+	alarma = if clock then ACTIVADO else NOACTIVADO;
+tel;
+
+node main(temp: tipo_temperatura) returns(clk_lento, clk_rapido: bool; alarma_final: act; temp_filtrada: tipo_temperatura when clk_rapido; temp_sincronizada: tipo_temperatura when clk_lento; clock: bool);
+var
+    c: int;
+    alarma: act;
+    umbral_cambio_brusco: tipo_temperatura;
+    diferencia_temperatura: tipo_temperatura;
+    alarma_cambio_brusco: bool; --Revisa cambios bruscos de temperatura
+let
+    umbral_cambio_brusco = 5.0;
+    diferencia_temperatura = temp - pre(temp);  -- Calcula la diferencia entre la temperatura actual y la pasada
+    alarma_cambio_brusco = if diferencia_temperatura > umbral_cambio_brusco then true else false;
+    c = pre(c) + 1;  
+    (clk_rapido, clk_lento) = generar_relojes(c);
+    temp_filtrada = filtrar_temperatura(clk_rapido, temp);
+    
+    (alarma, temp_sincronizada, clock) = activar_alarma(clk_rapido, clk_lento, temp_filtrada);
+    alarma_final = if not alarma_cambio_brusco then NOACTIVADO else alarma; --La alarma no salta cuando haya cambios bruscos (Asumimos que es un error de la medición)
+tel;
+
+
+
+
+
+
+
+node main_1() returns (media1, media2:real);
+var
+	array: array_sensores;
+let
+	array=inicializar();
+	media1=temperatura_media1(array);
+	media2=temperatura_media2(array);
+tel;
+
+
+node main_2() returns (val:real; array2:array_sensores);
+var
+	array: array_sensores;
+let
+	array=inicializar();
+	(val,array2)=filtrar_sensores(array);
+tel;
+
+
+
+node main_3() returns (array3:array_sensores);
+var
+	array: array_sensores;
+let
+	array=inicializar();
+	array3=modificar_sensores_impares(array);
+tel;
+

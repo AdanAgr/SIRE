@@ -1,0 +1,114 @@
+V "GNAT Lib v13"
+P SS ZX
+
+RN
+RV NO_EXCEPTION_HANDLERS
+RV NO_EXCEPTION_PROPAGATION
+RV NO_EXCEPTIONS
+RV NO_FLOATING_POINT
+RV NO_NESTED_FINALIZATION
+RV NO_STANDARD_STORAGE_POOLS
+RV NO_DEFAULT_INITIALIZATION
+RV NO_DYNAMIC_SIZED_OBJECTS
+
+U cuenta%b		cuenta.adb		169ebab8 NE OO PK
+W ada%s			ada.ads			ada.ali
+Z ada.exceptions%s	a-except.adb		a-except.ali
+W ada.strings%s		a-string.ads		a-string.ali
+Z ada.strings.text_buffers%s  a-sttebu.adb	a-sttebu.ali
+W ada.strings.unbounded%s  a-strunb.adb		a-strunb.ali
+Z system.return_stack%s	s-retsta.ads		s-retsta.ali
+Z system.soft_links%s	s-soflin.adb		s-soflin.ali
+Z system.standard_library%s  s-stalib.adb	s-stalib.ali
+
+U cuenta%s		cuenta.ads		a068a242 EE NE OO PK
+W ada%s			ada.ads			ada.ali
+Z ada.exceptions%s	a-except.adb		a-except.ali
+W ada.strings%s		a-string.ads		a-string.ali
+Z ada.strings.text_buffers%s  a-sttebu.adb	a-sttebu.ali
+W ada.strings.unbounded%s  a-strunb.adb		a-strunb.ali
+Z system%s		system.ads		system.ali
+
+D ada.ads		20240521074738 76789da1 ada%s
+D a-charac.ads		20240521074737 2d3ec45b ada.characters%s
+D a-chlat1.ads		20240521074737 e0d72e76 ada.characters.latin_1%s
+D a-except.ads		20240521074738 2a7d8d70 ada.exceptions%s
+D a-finali.ads		20240521074738 bf4f806b ada.finalization%s
+D a-stream.ads		20240521074738 119b8fb3 ada.streams%s
+D a-string.ads		20240521074738 90ac6797 ada.strings%s
+D a-strmap.ads		20240521074738 ed8acfdb ada.strings.maps%s
+D a-sttebu.ads		20240521074738 f1ad67a2 ada.strings.text_buffers%s
+D a-strunb.ads		20240521074738 7bfb7010 ada.strings.unbounded%s
+D a-stuten.ads		20240521074738 c6ced0ae ada.strings.utf_encoding%s
+D a-tags.ads		20240521074738 9eaa38c6 ada.tags%s
+D a-unccon.ads		20240521074738 0e9b276f ada.unchecked_conversion%s
+D cuenta.ads		20250425074306 db93d252 cuenta%s
+D cuenta.adb		20250425074311 b6f618fa cuenta%b
+D interfac.ads		20240521074738 15f799c2 interfaces%s
+D system.ads		20240521074738 426dafb8 system%s
+D s-atocou.ads		20240521074738 dc18efc3 system.atomic_counters%s
+D s-exctab.ads		20240521074738 91bef6ef system.exception_table%s
+D s-finroo.ads		20240521074738 4ff27390 system.finalization_root%s
+D s-memory.ads		20240521074738 5b8432d0 system.memory%s
+D s-parame.ads		20240904144414 1f39ba92 system.parameters%s
+D s-putima.ads		20240521074738 17291fe4 system.put_images%s
+D s-retsta.ads		20240521074738 0f6b06cb system.return_stack%s
+D s-secsta.ads		20240521074738 578279f5 system.secondary_stack%s
+D s-soflin.ads		20240521074738 df77073e system.soft_links%s
+D s-stache.ads		20240521074738 0b81c1fe system.stack_checking%s
+D s-stalib.ads		20240521074738 1c9580f6 system.standard_library%s
+D s-stalib.adb		20240521074738 eb464a47 system.standard_library%b
+D s-stoele.ads		20240521074738 ab5468e4 system.storage_elements%s
+D s-stoele.adb		20240521074738 8f5a9db6 system.storage_elements%b
+D s-stratt.ads		20240521074738 f7dfd786 system.stream_attributes%s
+D s-traent.ads		20240521074738 c81cbf8c system.traceback_entries%s
+D s-unstyp.ads		20240521074738 fa2a7f59 system.unsigned_types%s
+G a e
+G c Z s b [crear cuenta 6 13 none]
+G c Z s b [depositar cuenta 7 14 none]
+G c Z s b [retirar cuenta 8 14 none]
+G c Z s b [consultar_saldo cuenta 9 13 none]
+G c Z s b [obtener_titular cuenta 10 13 none]
+G c Z s s [cuenta_bancariaDI cuenta 13 9 none]
+G c Z s s [cuenta_bancariaDA cuenta 13 9 none]
+G c Z s s [cuenta_bancariaDF cuenta 13 9 none]
+G c Z s s [cuenta_bancariaIP cuenta 13 9 none]
+X 1 ada.ads
+16K9*Ada 20e8 14|1r6 1r33 15|1r6 1r33
+X 7 a-string.ads
+16K13*Strings 35e16 14|1r10 1r37 15|1r10 1r37
+X 10 a-strunb.ads
+85K21*Unbounded 766e26 14|1w18 1r45 15|1w18 1r45
+91R9*Unbounded_String<5|43R9> 745e15 14|14r17
+108V13*To_Unbounded_String{91R9} 15|7s20
+121V13*To_String{string} 15|33s14
+X 14 cuenta.ads
+3K9*Cuenta 13E9 17l5 17e11 15|3b14 35l5 35t11
+4R9*Cuenta_Bancaria 6r67 7r35 8r33 9r33 10r33 13c9 16e14 15|4r67 5r11 12r35
+. 17r33 26r33 31r33
+6V13*Crear{4R9} 6>19 6>37 15|4b13 10l8 10t13
+6a19 Titular{string} 15|4b19 7r40
+6f37 Saldo_Inicial{float} 15|4b37 8r18
+7U14*Depositar 7=24 7>52 15|12b14 15l8 15t17
+7r24 C{4R9} 15|12b24 14m7 14r18
+7f52 Monto{float} 15|12b52 14r28
+8U14*Retirar 8=22 8>50 15|17b14 24l8 24t15
+8r22 C{4R9} 15|17b22 19r10 20m10 20r21
+8f50 Monto{float} 15|17b50 19r21 20r31
+9V13*Consultar_Saldo{float} 9>29 15|26b13 29l8 29t23
+9r29 C{4R9} 15|26b29 28r14
+10V13*Obtener_Titular{string} 10>29 15|31b13 34l8 34t23
+10r29 C{4R9} 15|31b29 33r24
+14r7*Titular{10|91R9} 15|7m9 33r26
+15f7*Saldo{float} 15|8m9 14m9 14r20 19r12 20m12 20r23 28r16
+X 15 cuenta.adb
+5r7 C{14|4R9} 7m7 8m7 9r14
+X 17 system.ads
+67M9*Address
+X 21 s-memory.ads
+51V13*Alloc{17|67M9} 101i<c,__gnat_malloc>22
+66U14*Free 102i<c,__gnat_free>22
+74V13*Realloc{17|67M9} 103i<c,__gnat_realloc>22
+X 29 s-stalib.adb
+87U14 Break_Start 88i<c,__gnat_break_start>22
+

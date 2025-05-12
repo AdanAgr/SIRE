@@ -1,0 +1,14 @@
+node TrafficLight1(BOTON:bool) returns (GREEN, YELLOW, RED, WALK,
+DONTWALK: bool);
+var Fase, preFase: int;
+let
+preFase = 0 -> pre(Fase);
+Fase = if BOTON then 1
+else if 0 < preFase and preFase < 4 then preFase + 1
+else 0;
+GREEN = Fase = 0;
+YELLOW = Fase = 1;
+RED = Fase > 1;
+WALK = Fase > 2 and Fase < 4;
+DONTWALK = not WALK;
+tel

@@ -1,0 +1,19 @@
+node EDGE(X:bool) returns (Y:bool);
+let
+    Y = X -> X and not pre(X);
+tel
+
+node ABRO (A,B,R:bool) returns (O:bool);
+    var seenA, seenB : bool;
+
+let
+    O = EDGE(seenA and seenB);
+    seenA = A and not R -> not R and (A or pre(seenA));
+    seenB = B and not R -> not R and (B or pre(seenB));
+tel
+
+/*
+Queremos Detectar flancos de subida
+Contaremos como flanco de subida que esté en el instante 0 en input del EDGE
+sea True  (En caso de no querer eso en el EDGE cambiar X por false)
+*/

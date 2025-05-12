@@ -1,0 +1,1 @@
+En el código del TrafficLight 2 podemos ver que la señal ahora si que consigue alcanzar el valor GREEN, igualmente podemos ver que se retrasa ekl YELLOW un ciclo a la hora de pulsar el botón pero si mantenemos el botón pulsado no llega a salir en ningun momento de la etapa YELLOW.

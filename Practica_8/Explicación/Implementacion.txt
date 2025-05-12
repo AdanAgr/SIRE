@@ -1,0 +1,7 @@
+Nuestra implementación ha consistido en añadir un sistema que nos permita saber cuándo el robot está atrapado.
+
+Para ello, hemos creado un objeto protegido llamado `Estado_Giro_Protegido`, que lleva un contador de acciones de giro. Si este contador alcanza 4, se asume que el robot está atrapado, y se lanza un aviso de alarma.
+
+Cada vez que se ejecuta la acción `Girar`, se invoca `Giro_Estado.Registrar_Giro`, que incrementa el contador. En cambio, si el robot ejecuta otras acciones como `Avanzar` o `Cargar`, se llama a `Giro_Estado.Resetear` para reiniciar el contador.
+
+El archivo `Robot_Alarma.adb` contiene la implementación de la práctica 3 con la implementación, pero no se llega a ver, por eso hemos añadido `Robot_Alarma_Encendida.adb`, donde se simulan 4 giros consecutivos forzando sensores, para comprobar que la alarma se activa correctamente.

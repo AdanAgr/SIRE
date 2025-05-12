@@ -1,0 +1,12 @@
+node HORAS(H, M, S : int) returns (TIEMPO : int);
+var
+    h, m, s: int;
+let
+    h = 0 -> if H <> 0 then H else pre(h);
+    m = 0 -> if M <> 0 then M else pre(m);
+    s = 0 -> if S <> 0 then S else pre(s);
+    TIEMPO = if ((h - 12) * 3600 + (m * 60) + s) > 0 
+             then ((h - 12) * 3600 + (m * 60) + s) 
+             else 0;
+
+tel
